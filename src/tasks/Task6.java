@@ -5,11 +5,8 @@ import common.Person;
 import common.Task;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 Имеются
@@ -23,7 +20,43 @@ public class Task6 implements Task {
   private Set<String> getPersonDescriptions(Collection<Person> persons,
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
-    return new HashSet<>();
+    //V1 no stream
+  /* Set<String>personAndAreaName=new HashSet<>();
+    persons.forEach((person -> {
+      areas.forEach((area -> {
+        for (Integer areaId : personAreaIds.get(person.getId())) {
+          if (area.getId() == areaId) {
+            personAndAreaName.add(person.getFirstName() + " - " + area.getName());
+          }
+        }
+      }));
+    }));
+    return personAndAreaName;//*/
+  //V1 оптимизация
+    Set<String>personAndAreaName=new HashSet<>();
+    //Map<Integer,String> personNameIds=new HashMap<>();
+    Map<Integer,String> areaNameIds=new HashMap<>();
+    //persons.forEach(person -> personNameIds.put(person.getId(),person.getFirstName()));
+    areas.forEach(area -> areaNameIds.put(area.getId(),area.getName()));
+    for(Person person:persons) {
+      for (Integer areaId : personAreaIds.get(person.getId())) {
+         // System.out.println(person.getFirstName() + " - " + areaNameIds.get(areaId));
+          personAndAreaName.add(person.getFirstName() + " - " + areaNameIds.get(areaId));
+      }
+    }
+
+    return personAndAreaName;//*/
+
+
+
+    //V2 stream
+/*    return  persons.stream()
+            .map((p)-> areas.stream()
+                    .filter(area -> personAreaIds.get(p.getId()).contains(area.getId()))
+                    .map((a)-> p.getFirstName()+ " - " + a.getName())
+                    .collect(Collectors.toSet()))
+            .flatMap(s->s.stream())
+            .collect(Collectors.toSet());//*/
   }
 
   @Override
