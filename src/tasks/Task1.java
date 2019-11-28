@@ -18,20 +18,29 @@ public class Task1 implements Task {
   // !!! Редактируйте этот метод !!!
   private List<Person> findOrderedPersons(List<Integer> personIds) {
     //Set<Person> persons = PersonService.findPersons(personIds);
-    /*//V1
-    List<Person> persons=new ArrayList<Person>(PersonService.findPersons(personIds));
-    persons.sort(Comparator.comparing(Person::getId));
+    // V1 no Stream O((n^2))
+    /*List<Person> persons=new ArrayList<Person>(PersonService.findPersons(personIds));
+    List<Person> personsSort=new ArrayList<Person>();
+    for(Integer personId:personIds){
+        for(Person person:persons){
+            if(person.getId()==personId)
+                personsSort.add(person);
+        }
+    }//*/
 
+    //V1 no Stream O((n^2)*log(n))
+    /*List<Person> persons=new ArrayList<Person>(PersonService.findPersons(personIds));
+    persons.sort(Comparator.comparing(p->personIds.indexOf(p.getId())));
     return persons; //*/
-    //V2
+    //V2 stream  O((n^2)*log(n))
     return  PersonService.findPersons(personIds).stream()
-            .sorted(Comparator.comparing(Person::getId))
-            .collect(Collectors.toList());
+            .sorted(Comparator.comparing(p->personIds.indexOf(p.getId())))
+            .collect(Collectors.toList());//*/
   }
 
   @Override
   public boolean check() {
-    List<Integer> ids = List.of(1, 2, 3);
+    List<Integer> ids = List.of(2, 1, 3);
 
     return findOrderedPersons(ids).stream()
         .map(Person::getId)

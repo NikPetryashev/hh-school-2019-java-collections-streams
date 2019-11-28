@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 Имеются
@@ -23,7 +24,36 @@ public class Task6 implements Task {
   private Set<String> getPersonDescriptions(Collection<Person> persons,
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
-    return new HashSet<>();
+    //V1 no stream
+   /* Set<String>personAndAreaName=new HashSet<>();
+    persons.forEach((person -> {
+      areas.forEach((area -> {
+        for (Integer areaId : personAreaIds.get(person.getId())) {
+          if (area.getId() == areaId) {
+            personAndAreaName.add(person.getFirstName() + " - " + area.getName());
+          }
+        }
+      }));
+    }));
+    return personAndAreaName;//*/
+    //V2 stream
+    /*personAreaIds.entrySet().stream()
+            .flatMap((personAreaId)->personAreaId.getValue().stream())
+            .forEach(System.out::println);//*/
+    Set<String>personAndAreaName=new HashSet<>();
+    persons.stream()
+            .flatMap((p)->personAreaIds.get(p.getId()).stream())
+            /*.peek((i)->{
+              areas.forEach((area ->{
+                if(i==area.getId()) {
+                  personAndAreaName.add(p.getFirstName() + " - " + area.getName());
+                   // System.out.println(p.getFirstName() + " - " + area.getName());
+                  }
+                }));
+            }))*/
+            //.forEach(System.out::println);//*/
+            .collect(Collectors.toSet());
+    return personAndAreaName;
   }
 
   @Override
