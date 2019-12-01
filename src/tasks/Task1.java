@@ -35,7 +35,7 @@ public class Task1 implements Task {
     return persons; //*/
 
     //V2 stream  O((n^2)*log(n))
-    return  PersonService.findPersons(personIds).stream()
+   /* return  PersonService.findPersons(personIds).stream()
             .sorted(Comparator.comparing(p->personIds.indexOf(p.getId())))
             .collect(Collectors.toList());//*/
 
@@ -47,6 +47,18 @@ public class Task1 implements Task {
       persons.addAll(PersonService.findPersons(personIds1));
     }
     return persons;//*/
+
+    //Решение за O(2n)
+    Set<Person> persons = PersonService.findPersons(personIds);
+    Map<Integer,Person> mapPerson=new HashMap<>();
+    for(Person person: persons){
+      mapPerson.put(person.getId(),person);
+    }
+    List<Person> persons0=new ArrayList<Person>();
+    for(int id: personIds){
+      persons0.add(mapPerson.get(id));
+    }
+    return persons0;//*/
 
   }
 

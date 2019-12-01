@@ -5,11 +5,7 @@ import common.Person;
 import common.Task;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -25,7 +21,7 @@ public class Task6 implements Task {
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
     //V1 no stream
-   Set<String>personAndAreaName=new HashSet<>();
+  /* Set<String>personAndAreaName=new HashSet<>();
     persons.forEach((person -> {
       areas.forEach((area -> {
         for (Integer areaId : personAreaIds.get(person.getId())) {
@@ -36,6 +32,23 @@ public class Task6 implements Task {
       }));
     }));
     return personAndAreaName;//*/
+  //V1 оптимизация
+    Set<String>personAndAreaName=new HashSet<>();
+    //Map<Integer,String> personNameIds=new HashMap<>();
+    Map<Integer,String> areaNameIds=new HashMap<>();
+    //persons.forEach(person -> personNameIds.put(person.getId(),person.getFirstName()));
+    areas.forEach(area -> areaNameIds.put(area.getId(),area.getName()));
+    for(Person person:persons) {
+      for (Integer areaId : personAreaIds.get(person.getId())) {
+         // System.out.println(person.getFirstName() + " - " + areaNameIds.get(areaId));
+          personAndAreaName.add(person.getFirstName() + " - " + areaNameIds.get(areaId));
+      }
+    }
+
+    return personAndAreaName;//*/
+
+
+
     //V2 stream
 /*    return  persons.stream()
             .map((p)-> areas.stream()
