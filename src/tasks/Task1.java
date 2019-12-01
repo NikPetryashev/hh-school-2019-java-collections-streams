@@ -5,6 +5,7 @@ import common.PersonService;
 import common.Task;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /*
@@ -17,49 +18,13 @@ public class Task1 implements Task {
 
   // !!! Редактируйте этот метод !!!
   private List<Person> findOrderedPersons(List<Integer> personIds) {
-    //Set<Person> persons = PersonService.findPersons(personIds);
-    // V1 no Stream O((n^2))
-    /*List<Person> persons=new ArrayList<Person>(PersonService.findPersons(personIds));
-    List<Person> personsSort=new ArrayList<Person>();
-    for(Integer personId:personIds){
-        for(Person person:persons){
-            if(person.getId()==personId)
-                personsSort.add(person);
-        }
-    }
-     return persons;//*/
-
-    //V1 no Stream O((n^2)*log(n))
-    /*List<Person> persons=new ArrayList<Person>(PersonService.findPersons(personIds));
-    persons.sort(Comparator.comparing(p->personIds.indexOf(p.getId())));
-    return persons; //*/
-
-    //V2 stream  O((n^2)*log(n))
-   /* return  PersonService.findPersons(personIds).stream()
-            .sorted(Comparator.comparing(p->personIds.indexOf(p.getId())))
-            .collect(Collectors.toList());//*/
-
-    //Лайф хак за O(n)
-   /* List<Person> persons=new ArrayList<Person>();
-    for(int i=0;i<personIds.size();i++){
-      List<Integer> personIds1=new ArrayList<>();
-      personIds1.add(personIds.get(i));
-      persons.addAll(PersonService.findPersons(personIds1));
-    }
-    return persons;//*/
-
     //Решение за O(2n)
-    Set<Person> persons = PersonService.findPersons(personIds);
-    Map<Integer,Person> mapPerson=new HashMap<>();
-    for(Person person: persons){
-      mapPerson.put(person.getId(),person);
-    }
-    List<Person> persons0=new ArrayList<Person>();
-    for(int id: personIds){
-      persons0.add(mapPerson.get(id));
-    }
-    return persons0;//*/
+    Map<Integer,Person> mapPerson=PersonService.findPersons(personIds).stream()
+              .collect(Collectors.toMap(Person::getId, Function.identity()));
 
+    return personIds.stream()
+            .map(mapPerson::get)
+            .collect(Collectors.toList());//*/
   }
 
   @Override
