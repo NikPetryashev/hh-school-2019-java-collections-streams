@@ -5,6 +5,7 @@ import common.Task;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,7 +43,7 @@ public class Task8 implements Task {
    //код выглядит чище и компактней, если завернуть все в стрим
     //нет лишнего пробела при сборке полного имени, если один из параметров оказался null
     return Stream.of(person.getSecondName(),person.getFirstName(),person.getMiddleName())
-            .filter(name->name!=null)
+            .filter(Objects::nonNull)
             .collect(Collectors.joining(" "));
   }
 
@@ -55,9 +56,12 @@ public class Task8 implements Task {
 
   // есть ли совпадающие в двух коллекциях персоны?
   public boolean hasSamePersons(Collection<Person> persons1, Collection<Person> persons2) {
-    return !Collections.disjoint(persons1,persons2); //для такого сравнения воспользуемся методом коллекции
-                                                      // оставил отрицание, чтобы меотд возвращал тоже булевое значение,что и до рефакторинга
-                                                    //но возможно стоит оставить true (когда в колекциях все элементы различны) и пересмотреть методы, где используется эта функция
+    //return !Collections.disjoint(persons1,persons2); //для такого сравнения воспользуемся методом коллекции
+
+    //В исходный вариант добавить break, или же записать все через stream.
+    //по функциональности тоже самое, а записсь гораздо чище
+    return persons1.stream()
+            .anyMatch(persons2::contains);
   }
 
   //Выглядит вроде неплохо...

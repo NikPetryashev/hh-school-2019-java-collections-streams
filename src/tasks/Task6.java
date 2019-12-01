@@ -20,17 +20,17 @@ public class Task6 implements Task {
   private Set<String> getPersonDescriptions(Collection<Person> persons,
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
-  //V1 оптимизация
-    Set<String>personAndAreaName=new HashSet<>();
-    Map<Integer,String> areaNameIds=new HashMap<>();
-    areas.forEach(area -> areaNameIds.put(area.getId(),area.getName()));
+  //V1
+    Set<String>personDescription=new HashSet<>();
+    Map<Integer,String> areaNames=new HashMap<>();
+    areas.forEach(area -> areaNames.put(area.getId(),area.getName()));
     for(Person person:persons) {
       for (Integer areaId : personAreaIds.get(person.getId())) {
-          personAndAreaName.add(person.getFirstName() + " - " + areaNameIds.get(areaId));
+          personDescription.add(person.getFirstName() + " - " + areaNames.get(areaId));
       }
     }
 
-    return personAndAreaName;//*/
+    return personDescription;//*/
   }
 
   @Override

@@ -22,7 +22,7 @@ public class Task4 implements Task {
   private List<ApiPersonDto> convert(List<Person> persons) {
     //V2 stream
     return persons.stream()
-           .map((p)->convert(p))
+           .map(person -> convert(person))
            .collect(Collectors.toList());//*/
   }
 
