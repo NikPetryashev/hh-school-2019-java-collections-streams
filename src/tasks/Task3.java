@@ -18,19 +18,12 @@ public class Task3 implements Task {
 
   // !!! Редактируйте этот метод !!!
   private List<Person> sort(Collection<Person> persons) {
-  //V1
-    /*List<Person> sortPersons=new ArrayList<Person>(persons);
-    sortPersons.sort(Comparator.comparing(Person::getSecondName)
-            .thenComparing(Person::getFirstName)
-            .thenComparing(Person::getCreatedAt));
-    return sortPersons;//*/
     //V2
    return persons.stream()
            .sorted(Comparator.comparing(Person::getSecondName)
                    .thenComparing(Person::getFirstName)
                    .thenComparing(Person::getCreatedAt))
            .collect(Collectors.toList());//*/
-    //return new ArrayList<>(persons);
   }
 
   @Override
