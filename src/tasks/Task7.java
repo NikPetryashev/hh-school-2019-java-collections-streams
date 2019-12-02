@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
  */
 public class Task7 implements Task {
 
-  private Set<String> vacancyNames(Collection<Company> companies) {
+  private Set <String> vacancyNames(Collection <Company> companies) {
     //V2 stream
     return companies.stream()
-            .flatMap(company->company.getVacancies().stream())
+            .flatMap(company -> company.getVacancies().stream())
             .map(Vacancy::getTitle)
             .collect(Collectors.toSet());//*/
   }

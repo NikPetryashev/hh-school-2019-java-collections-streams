@@ -23,7 +23,7 @@ P.P.S Здесь ваши правки желательно прокоммент
  */
 public class Task8 implements Task {
   //Не хотим выдывать апи нашу фальшивую персону, поэтому конвертим начиная со второй
-  public List<String> getNames(List<Person> persons) {
+  public List <String> getNames(List <Person> persons) {
     //в исходной варианте метод remove меняет исходную коллекцию, либо выдаст Exception - когда колекция неизменяемая
     return persons.stream()
             .skip(1)                  //пропускаем первую персону, если передать пустой список или с 1 персоной- вернется пустой список
@@ -32,10 +32,10 @@ public class Task8 implements Task {
   }
 
   //ну и различные имена тоже хочется
-  public Set<String> getDifferentNames(List<Person> persons) {
+  public Set <String> getDifferentNames(List <Person> persons) {
     //В Stream лишняя операция distinct, так как коллекция Set содержит только уникальные значения
     //Но и стрим здесь не нужен
-    return new HashSet<>(getNames(persons));
+    return new HashSet <>(getNames(persons));
   }
 
   //Для фронтов выдадим полное имя, а то сами не могут
@@ -49,17 +49,17 @@ public class Task8 implements Task {
   }
 
   // словарь id персоны -> ее имя
-  public Map<Integer, String> getPersonNames(Collection<Person> persons) {
+  public Map <Integer, String> getPersonNames(Collection <Person> persons) {
     //сделаем все через стрим, при дубликатах оставляем старое значение (так в исходном коде)
     return persons.stream()
             .collect(toMap(Person::getId, person -> convertPersonToString(person),(oldPerson, newPerson) -> oldPerson));
   }
 
   // есть ли совпадающие в двух коллекциях персоны?
-  public boolean hasSamePersons(Collection<Person> persons1, Collection<Person> persons2) {
+  public boolean hasSamePersons(Collection <Person> persons1, Collection<Person> persons2) {
     //Асимптотика решения станет O(2n)
     //За O(n) положили первую коллекция в набор
-    Set<Person> uniquePersons1=new HashSet<>(persons1);
+    Set <Person> uniquePersons1=new HashSet <>(persons1);
     //За O(n) сравнили элементы второй коллекции, есть ли они в наборе (доступ за О(1))
     return persons2.stream()
             .anyMatch(uniquePersons1::contains);
@@ -71,7 +71,6 @@ public class Task8 implements Task {
   }
 
   //Выглядит вроде неплохо...
-  private long count; //неиспользуемая переменная
   public long countEven(Stream <Integer> numbers) {
   //для более сложной логики можно применить метод reduce,
 /*   return numbers.filter(num -> num % 2 == 0)

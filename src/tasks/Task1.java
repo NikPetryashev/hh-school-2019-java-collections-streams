@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public class Task1 implements Task {
 
   // !!! Редактируйте этот метод !!!
-  private List<Person> findOrderedPersons(List<Integer> personIds) {
+  private List <Person> findOrderedPersons(List <Integer> personIds) {
     //Решение за O(2n)
-    Map<Integer,Person> mapPerson=PersonService.findPersons(personIds).stream()
+    Map <Integer,Person> mapPerson = PersonService.findPersons(personIds).stream()
               .collect(Collectors.toMap(Person::getId, Function.identity()));
 
     return personIds.stream()
@@ -29,7 +29,7 @@ public class Task1 implements Task {
 
   @Override
   public boolean check() {
-    List<Integer> ids = List.of(2, 1, 3);
+    List <Integer> ids = List.of(2, 1, 3);
 
     return findOrderedPersons(ids).stream()
         .map(Person::getId)

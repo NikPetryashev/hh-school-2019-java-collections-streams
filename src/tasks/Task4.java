@@ -19,7 +19,7 @@ FYI - DTO = Data Transfer Object
 public class Task4 implements Task {
 
   // !!! Редактируйте этот метод !!!
-  private List<ApiPersonDto> convert(List<Person> persons) {
+  private List <ApiPersonDto> convert(List <Person> persons) {
     //V2 stream
     return persons.stream()
            .map(person -> convert(person))

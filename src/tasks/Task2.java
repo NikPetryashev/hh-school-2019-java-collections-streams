@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 public class Task2 implements Task {
 
   // !!! Редактируйте этот метод !!!
-  private static List<Person> combineAndSortWithLimit(Collection<Person> persons1,
-                                                      Collection<Person> persons2,
+  private static List <Person> combineAndSortWithLimit(Collection <Person> persons1,
+                                                      Collection <Person> persons2,
                                                       int limit) {
     //V2
     return  Stream.concat(persons1.stream(), persons2.stream())
