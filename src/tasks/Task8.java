@@ -59,10 +59,10 @@ public class Task8 implements Task {
   public boolean hasSamePersons(Collection <Person> persons1, Collection<Person> persons2) {
     //Асимптотика решения станет O(2n)
     //За O(n) положили первую коллекция в набор
-    Set <Person> uniquePersons1=new HashSet <>(persons1);
+    Set <Person> persons1Set=new HashSet <>(persons1);
     //За O(n) сравнили элементы второй коллекции, есть ли они в наборе (доступ за О(1))
     return persons2.stream()
-            .anyMatch(uniquePersons1::contains);
+            .anyMatch(persons1Set::contains);
 
     //В исходный вариант добавить break, или же записать все через stream.
     //по функциональности тоже самое, а запись гораздо чище. Но асимптотика  O(n^2)

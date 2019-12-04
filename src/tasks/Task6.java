@@ -24,8 +24,9 @@ public class Task6 implements Task {
     Set <String> personDescription = new HashSet <>();
     Map <Integer,String> areaNames = new HashMap <>();
     areas.forEach(area -> areaNames.put(area.getId(),area.getName()));
+
     for(Person person:persons) {
-      for (Integer areaId : personAreaIds.get(person.getId())) {
+      for (Integer areaId : personAreaIds.getOrDefault(person.getId(),Collections.emptySet())) {
           personDescription.add(person.getFirstName() + " - " + areaNames.get(areaId));
       }
     }
